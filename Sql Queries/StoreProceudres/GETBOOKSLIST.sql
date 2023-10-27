@@ -1,4 +1,4 @@
-CREATE PROCEDURE [BK].[GETBOOKSLIST]
+CREATE PROCEDURE [GETBOOKSLIST]
 
 @publisher			NVARCHAR(max) = NULL,
 @title				NVARCHAR(max) = NULL,
@@ -14,8 +14,8 @@ BEGIN
 	Title	AS 'title',
 	AuthorFirstName	AS 'authorFirstName',
 	AuthorLastName	AS 'authorLastName',
-	PriceAS 'price'
-	FROM [BK].BookTbl
+	Price AS 'price'
+	FROM BookTbl
 	WHERE 
 (@publisher IS NULL or Publisher LIKE '%'+@publisher+'%')
 AND (@title IS NULL or Title LIKE '%'+@title+'%')

@@ -1,7 +1,7 @@
 
 --Creating Table 
 
-CREATE TABLE [BK].BookTbl (
+CREATE TABLE BookTbl (
     
     Id INT IDENTITY(1,1) PRIMARY KEY,
     Publisher NVARCHAR(255) NULL,
@@ -13,7 +13,8 @@ CREATE TABLE [BK].BookTbl (
 
 
 --Creating User-Defined Table for Bulk Save
-CREATE TYPE [BK].tblBookStore AS TABLE
+
+CREATE TYPE tblBookStore AS TABLE
 (
     Id INT,
     Publisher NVARCHAR(255),

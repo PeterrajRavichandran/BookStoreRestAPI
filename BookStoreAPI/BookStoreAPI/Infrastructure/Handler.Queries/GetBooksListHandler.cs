@@ -33,7 +33,7 @@ namespace BookStoreAPI.Infrastructure.Handler.Queries
                 parameters.Add("@authorFirstName", request.AuthorFirstName);
                 parameters.Add("@authorLastName", request.AuthorLastName);
 
-                var _set = await _dapper.ExecuteGridReaderAsync("[BKS].[SP_GETBOOKSLIST]", parameters, CommandType.StoredProcedure);
+                var _set = await _dapper.ExecuteGridReaderAsync("[dbo].[GETBOOKSLIST]", parameters, CommandType.StoredProcedure);
                 var set = (await _set.ReadAsync<SPGetBooksList>()).ToList();
 
                 if (set.Count > 0)

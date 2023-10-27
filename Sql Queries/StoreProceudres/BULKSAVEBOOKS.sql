@@ -1,20 +1,25 @@
-CREATE PROCEDURE [BK].[BULKSAVEBOOKS]
-@tblBulkSave [BK].tblBookStore READONLY
-
+CREATE PROCEDURE [BULKSAVEBOOKS]
+@tblBulkSave [dbo].tblBookStore READONLY
 AS
 BEGIN
-    MERGE BookStoreTbl  AS bookStoreTbl
-    USING @tblBulkSave AS tblTypeBkSave
-    ON (bookStoreTbl.Id = tblTypeBkSave.Id)
 
-    WHEN  MATCHED THEN
-        UPDATE SET  Publisher = tblTypeBkSave.Publisher,
-                    Title = tblTypeBkSave.Title,
-                    AuthorLastName= tblTypeBkSave.AuthorLastName,
-                    AuthorFirstName= tblTypeBkSave.AuthorFirstName,
-                    Price= tblTypeBkSave.Price
+    UPDATE b
+    SET b.Publisher = t.Publisher,
+        b.Title = t.Title,
+        b.AuthorLastName = t.AuthorLastName,
+        b.AuthorFirstName = t.AuthorFirstName,
+        b.Price = t.Price
+    FROM BookTbl b
+    JOIN @tblBulkSave t ON b.Id = t.Id;
 
-    WHEN NOT MATCHED THEN
-        INSERT ([Publisher],[Title],[AuthorLastName],[AuthorFirstName],[Price])
-        VALUES (tblTypeBkSave.Publisher,tblTypeBkSave.Title,tblTypeBkSave.AuthorLastName,tblTypeBkSave.AuthorFirstName,tblTypeBkSave.Price);
+    -- Insert new records
+    INSERT INTO BookTbl (Publisher, Title, AuthorLastName, AuthorFirstName, Price)
+	OUTPUT 1 AS ResultCode
+    SELECT Publisher, Title, AuthorLastName, AuthorFirstName, Price
+    FROM @tblBulkSave t
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM BookTbl b
+        WHERE b.Id = t.Id
+    );
 END

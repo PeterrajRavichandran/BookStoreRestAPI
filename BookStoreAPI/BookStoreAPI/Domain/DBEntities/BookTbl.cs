@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookStoreAPI.Domain.DBEntities;
 
-[Table("BookStoreTbl", Schema = "BKS")]
-public partial class BookStoreTbl
+[Table("BookTbl")]
+public partial class BookTbl
 {
     public int Id { get; set; }
     public string? Publisher { get; set; }

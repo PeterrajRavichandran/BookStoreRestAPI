@@ -48,10 +48,10 @@ namespace BookStoreAPI.Infrastructure.Handler.Commands
                         TblBookStoreRows["Price"] = bkData.Price;
                         tblBookStore.Rows.Add(TblBookStoreRows);
                     }
-                    Parameters.Add("@bookStoreData", tblBookStore.AsTableValuedParameter("[BK].tblBookStore"));
+                    Parameters.Add("@tblBulkSave", tblBookStore.AsTableValuedParameter("[dbo].tblBookStore"));
                 }
 
-                var set = await _dapper.Get<int>("[BK].[BULKSAVEBOOKS]", Parameters, CommandType.StoredProcedure);
+                var set = await _dapper.Get<int>("[dbo].[SP_BULKSAVEBOOKS]", Parameters, CommandType.StoredProcedure);
 
                 result.Data = set > 0 ? set : 0;
                 result.IsSuccess = set > 0 ? true : false;

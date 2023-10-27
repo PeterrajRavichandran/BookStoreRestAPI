@@ -11,32 +11,29 @@ namespace BookStoreAPI.Controllers
     [Route("[controller]")]
     public class StoreController : ControllerBase
     {
-        private readonly ILogger<StoreController> _logger;
         protected virtual IMediator _mediator { get; set; }
         public StoreController(ILogger<StoreController> logger, IMediator mediator)
         {
-            _logger = logger;
             _mediator = mediator;
         }
 
         [HttpPost("get-books-list")]
         public async Task<Result<List<GetBooksListResponse>>> GetBooksList(GetBooksListQuery query, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetBooks");
+
             return await _mediator.Send(query);
         }
 
         [HttpPost("booksList-authorTitle-based")]
         public async Task<Result<List<GetBooksListResponse>>> GetBooksList(GetBooksListAuthorTitleQuery query, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetBooksListAuthorTitle Method has been Hit");
             return await _mediator.Send(query);
         }
 
         [HttpPost("get-books-totalPrice")]
         public async Task<Result<decimal>> GetBooksTotalPrice(CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetBooksTotalPrice");
+
             GetBooksTotalPriceQuery query = new GetBooksTotalPriceQuery();
             return await _mediator.Send(query);
         }
@@ -44,7 +41,6 @@ namespace BookStoreAPI.Controllers
         [HttpPost("bulk-save-books")]
         public async Task<Result<int>> BulkSave(BulkSaveBooksQuery query, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("GetBooksTotalPrice");
             return await _mediator.Send(query);
         }
     }

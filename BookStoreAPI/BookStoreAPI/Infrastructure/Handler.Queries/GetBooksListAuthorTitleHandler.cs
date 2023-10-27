@@ -19,7 +19,7 @@ namespace BookStoreAPI.Infrastructure.Handler.Queries
         }
         public async Task<Result<List<GetBooksListResponse>>> Handle(GetBooksListAuthorTitleQuery request, CancellationToken cancellationToken)
         {
-            _logger.LogInformation("Get Books List Handler Method Hit");
+          
             Result<List<GetBooksListResponse>> result = new Result<List<GetBooksListResponse>>();
             try
             {
@@ -28,7 +28,7 @@ namespace BookStoreAPI.Infrastructure.Handler.Queries
                 parameters.Add("@authorFirstName", request.AuthorFirstName);
                 parameters.Add("@authorLastName", request.AuthorLastName);
 
-                var set = await _dapper.GetAll<SPGetBooksList>("[BK].[GETBOOKSLIST]", parameters, CommandType.StoredProcedure);
+                var set = await _dapper.GetAll<SPGetBooksList>("[dbo].[GETBOOKSLIST]", parameters, CommandType.StoredProcedure);
 
                 if (set.Count > 0)
                 {

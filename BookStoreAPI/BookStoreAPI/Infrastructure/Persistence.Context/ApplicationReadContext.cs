@@ -6,7 +6,7 @@ namespace BookStoreAPI.Infrastructure.Persistence.Context
 {
     public partial class ApplicationReadContext : ReadDBContext
     {
-        public virtual DbSet<BookStoreTbl> Books { get; set; }
+        public virtual DbSet<BookTbl> Books { get; set; }
         public ApplicationReadContext()
         {
         }
@@ -19,7 +19,7 @@ namespace BookStoreAPI.Infrastructure.Persistence.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BookStoreTbl>(entity =>
+            modelBuilder.Entity<BookTbl>(entity =>
             {
                 entity.HasKey(e => e.Id).HasName("PK__BookStor__3214EC07AB153B7F");
 
